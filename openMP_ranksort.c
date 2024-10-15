@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
     printf("data size is %d\n",data_size);
 
     srand(time(NULL)); 
-    int i = 0,j = 0,count = 0; // private
+    int i = 0,g = 0,counter = 0,j = 0,count = 0; // private
     int tid; // private
     int* rank = malloc(data_size * sizeof(int));; // shared
     int* SortedArray = malloc(data_size * sizeof(int));// shared
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]){
 
     printf("\nData Allocated");
     // printf("\ndata generating..");
-    for(int i = 0;i < data_size;i++){
+    for(i = 0;i < data_size;i++){
         DataArray[i] = rand() % max_value;
         SortedArray[i] = -1; // set as no data
     }
@@ -67,7 +67,7 @@ int main(int argc, char *argv[]){
 
     }
 
-    for(int g = 0,counter; g < data_size;g++){
+    for(g = 0; g < data_size;g++){
         SortedArray[rank[g]] = DataArray[g];
     }
 
@@ -79,7 +79,7 @@ int main(int argc, char *argv[]){
     printf("\ntime used %.5f second\n",cpu_time_used);
     printf("\nsorted array (preview 20 elements) : ");
 
-    for(int g = 0;g < data_size && g < 20;g++){
+    for(g = 0;g < data_size && g < 20;g++){
         printf(" %d",SortedArray[g]);
     }
 
