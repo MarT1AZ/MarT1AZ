@@ -27,9 +27,8 @@ int main(int argc, char *argv[]){
     printf("data size is %d\n",data_size);
 
     srand(time(NULL)); 
-    int i = 0,g = 0,counter = 0,j = 0,count = 0; // private
+    int i = 0,g = 0,j = 0,count = 0; // private
     int tid; // private
-    int* rank = malloc(data_size * sizeof(int));; // shared
     int* SortedArray = malloc(data_size * sizeof(int));// shared
     int* DataArray = malloc(data_size * sizeof(int)); // shared
 
@@ -42,7 +41,6 @@ int main(int argc, char *argv[]){
     // printf("\ndata generating..");
     for(i = 0;i < data_size;i++){
         DataArray[i] = rand() % max_value;
-        SortedArray[i] = -1; // set as no data
     }
     
     #pragma omp parallel num_threads(num_thread) private(i,j,tid,count)
@@ -61,14 +59,10 @@ int main(int argc, char *argv[]){
 
             }
 
-            rank[i] = count;
+            SortedArray[count] = DataArray[i];
 
         }
 
-    }
-
-    for(g = 0; g < data_size;g++){
-        SortedArray[rank[g]] = DataArray[g];
     }
 
     end_time = omp_get_wtime(); // end the clocking
@@ -85,7 +79,6 @@ int main(int argc, char *argv[]){
 
     free(DataArray);
     free(SortedArray);
-    free(rank);
 
     
 
